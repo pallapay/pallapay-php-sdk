@@ -28,6 +28,7 @@ class Payment extends Request
      * @param string|null $payerLastName
      * @param string|null $note
      * @param string|null $orderId
+     * @param string|null $paymentCurrencySymbol
      * @return mixed
      * @throws ApiException
      */
@@ -37,11 +38,12 @@ class Payment extends Request
         string $payerEmailAddress,
         string $ipnSuccessUrl,
         string $ipnFailedUrl,
-        ?string $webhookUrl,
-        ?string $payerFirstName,
-        ?string $payerLastName,
-        ?string $note,
-        ?string $orderId
+        ?string $webhookUrl = null,
+        ?string $payerFirstName  = null,
+        ?string $payerLastName = null,
+        ?string $note = null,
+        ?string $orderId = null,
+        ?string $paymentCurrencySymbol = null
     ) {
 
         $this->addJsonParam('symbol', $symbol);
@@ -54,6 +56,7 @@ class Payment extends Request
         $this->addJsonParam('payer_last_name', $payerLastName);
         $this->addJsonParam('note', $note);
         $this->addJsonParam('order_id', $orderId);
+        $this->addJsonParam('payment_currency_symbol', $paymentCurrencySymbol);
 
         return $this->sendRequest(self::POST_METHOD, '/api/v1/api/payments');
     }
@@ -100,6 +103,7 @@ class Payment extends Request
                 $data['payer_email_address'],
                 $data['status'],
                 $data['receiving_amount'],
+                $data['receiving_currency'],
                 $data['paid_cryptocurrency'],
                 $data['fee_amount'],
                 $data['fee_paid_by'],

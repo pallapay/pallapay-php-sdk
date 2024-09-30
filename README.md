@@ -31,6 +31,7 @@ $createdPayment = $pallapayClient->payment()->create(
     'Doe', // Optional
     'My Custom Note', // Optional
     'Order ID' // Optional
+    //'USDT', // (paymentCurrencySymbol => Force the user to pay only in the selected currency, for example: USDT, ETH, ...) Optional
 );
 
 echo $createdPayment["data"]["payment_link"];
@@ -38,18 +39,19 @@ echo $createdPayment["data"]["payment_link"];
 
 `create` method params:
 
-| Name               | Description                                                                                                                                               | Required |
-|--------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------|----------|
-| $symbol            | Currency of the payment                                                                                                                                   | YES      |
-| $amount            | Amount in selected currency                                                                                                                               | YES      |
-| $payerEmailAddress | Payer email address                                                                                                                                       | YES      |
-| $ipnSuccessUrl     | The URL that we redirect the user after successful payment                                                                                                | YES      |
-| $ipnFailedUrl      | The URL that we redirect the user after unsuccessful payment                                                                                              | YES      |
-| $webhookUrl        | Webhook URL (If webhookUrl is NULL pallapay will send notifications to default webhook URL that you entered while creating your API Key)                  | NO       |
-| $payerFirstName    | Payer first name                                                                                                                                          | NO       |
-| $payerLastName     | Payer last name                                                                                                                                           | NO       |
-| $note              | You can pass any custom note here. for example, your customer ID. This item is not displayed to the buyer (You will receive this in your webhook URL too) | NO       |
-| $orderId           | You can pass a "**unique**" order id here. This item is not displayed to the buyer as well (You will receive this in your webhook URL too)                | NO       |
+| Name                   | Description                                                                                                                                                 | Required |
+|------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------|----------|
+| $symbol                | Currency of the payment                                                                                                                                     | YES      |
+| $amount                | Amount in selected currency                                                                                                                                 | YES      |
+| $payerEmailAddress     | Payer email address                                                                                                                                         | YES      |
+| $ipnSuccessUrl         | The URL that we redirect the user after successful payment                                                                                                  | YES      |
+| $ipnFailedUrl          | The URL that we redirect the user after unsuccessful payment                                                                                                | YES      |
+| $webhookUrl            | Webhook URL (If webhookUrl is NULL pallapay will send notifications to default webhook URL that you entered while creating your API Key)                    | NO       |
+| $payerFirstName        | Payer first name                                                                                                                                            | NO       |
+| $payerLastName         | Payer last name                                                                                                                                             | NO       |
+| $note                  | You can pass any custom note here. for example, your customer ID. This item is not displayed to the buyer (You will receive this in your webhook URL too)   | NO       |
+| $orderId               | You can pass a "**unique**" order id here. This item is not displayed to the buyer as well (You will receive this in your webhook URL too)                  | NO       |
+| $paymentCurrencySymbol | Force the user to pay only in the selected cryptocurrency, for example: USDT, ETH, ... (If you dont provide anything user can pay using any cryptocurrency) | NO       |
 
 
 After that you can redirect user to `payment_link`.
@@ -93,6 +95,7 @@ if ($ipnData->isValid() && $ipnData->isPaid()) {
 | getPayerEmailAddress  | Payer email address                                                                          |
 | getStatus             | Payment status (`PAID` or `UNPAID`)                                                          |
 | getReceivingAmount    | The amount that you will receive in your Pallapay balance (After fees, if applicable)        |
+| getReceivingCurrency  | The currency that you will receive in your Pallapay balance                                  |
 | getPaidCryptocurrency | The cryptocurrency your user selected to pay with                                            |
 | getFeeAmount          | Payment fee in selected fiat currency                                                        |
 | getFeePaidBy          | Who paid the fees on this payment (You can choose who pay for fees in dashboard -> API Keys) |

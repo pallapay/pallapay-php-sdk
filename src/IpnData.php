@@ -38,6 +38,11 @@ class IpnData
     private ?string $receivingAmount;
 
     /**
+     * @var string|null $receivingCurrency
+     */
+    private ?string $receivingCurrency;
+
+    /**
      * @var string|null $paidCryptocurrency
      */
     private ?string $paidCryptocurrency;
@@ -101,6 +106,7 @@ class IpnData
      * @param string $payerEmailAddress
      * @param string $status
      * @param string|null $receivingAmount
+     * @param string|null $receivingCurrency
      * @param string|null $paidCryptocurrency
      * @param string|null $feeAmount
      * @param string|null $feePaidBy
@@ -120,6 +126,7 @@ class IpnData
         string $payerEmailAddress,
         string $status,
         ?string $receivingAmount,
+        ?string $receivingCurrency,
         ?string $paidCryptocurrency,
         ?string $feeAmount,
         ?string $feePaidBy,
@@ -138,6 +145,7 @@ class IpnData
         $this->payerEmailAddress = $payerEmailAddress;
         $this->status = $status;
         $this->receivingAmount = $receivingAmount;
+        $this->receivingCurrency = $receivingCurrency;
         $this->paidCryptocurrency = $paidCryptocurrency;
         $this->feeAmount = $feeAmount;
         $this->feePaidBy = $feePaidBy;
@@ -180,6 +188,7 @@ class IpnData
             'payerEmailAddress' => $this->payerEmailAddress,
             'status' => $this->status,
             'receivingAmount' => $this->receivingAmount,
+            'receivingCurrency' => $this->receivingCurrency,
             'paidCryptocurrency' => $this->paidCryptocurrency,
             'feeAmount' => $this->feeAmount,
             'feePaidBy' => $this->feePaidBy,
@@ -232,6 +241,14 @@ class IpnData
      */
     public function getReceivingAmount(): ?string {
         return $this->receivingAmount;
+    }
+
+
+    /**
+     * @return string|null
+     */
+    public function getReceivingCurrency(): ?string {
+        return $this->receivingCurrency;
     }
 
     /**
